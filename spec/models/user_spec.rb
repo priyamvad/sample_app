@@ -33,6 +33,17 @@ describe User do
     it { should_not be_valid } 
   end
 
+  describe "email saves as downcase" do
+    let(:email_with_mixed) { "REFasds@sad.COM" }
+    
+    it "should be saved properly" do
+      @user.email = email_with_mixed
+      @user.save
+      @user.reload.email.should == email_with_mixed.downcase
+    end
+
+  end
+  
   describe "return value of authenticate" do
     before { @user.save }
     let(:found_user) { User.find_by_email(@user.email) }
